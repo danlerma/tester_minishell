@@ -177,6 +177,92 @@ tester_linux()
 	else
 		echo $BRED"KO!"$WHITE;
 	fi
+	#noexiste | ls
+	bash -c "noexiste | ls" > $DIR/my_tmp 2>&1
+	tail -n +2 $DIR/my_tmp > $DIR/my_out12
+	head -n 1 $DIR/my_tmp > $DIR/word
+	awk '{$1 = ""; print > "test/word"}' $DIR/word
+	cat $DIR/word | sed 's/^[[:space:]]*//' >> $DIR/my_out12
+	rm -rf $DIR/my_tmp $DIR/word
+	echo "noexiste | ls" | ./minishell > $DIR/your_out12 2>&1
+	sed '$ d' $DIR/your_out12 > tmp2
+	tail -n +2 tmp2 > $DIR/your_out12
+	rm -rf  tmp2
+	if [ $(diff $DIR/my_out12 $DIR/your_out12 | wc -l) -eq 0 ]; then
+		echo $BGREEN"OK!"$WHITE;
+	else
+		echo $BRED"KO!"$WHITE;
+	fi
+	#noexiste
+	bash -c "noexiste" > $DIR/my_tmp 2>&1
+	tail -n +2 $DIR/my_tmp > $DIR/my_out13
+	head -n 1 $DIR/my_tmp > $DIR/word
+	awk '{$1 = ""; print > "test/word"}' $DIR/word
+	cat $DIR/word | sed 's/^[[:space:]]*//' >> $DIR/my_out13
+	rm -rf $DIR/my_tmp $DIR/word
+	echo "noexiste" | ./minishell > $DIR/your_out13 2>&1
+	sed '$ d' $DIR/your_out13 > tmp2
+	tail -n +2 tmp2 > $DIR/your_out13
+	rm -rf  tmp2
+	if [ $(diff $DIR/my_out13 $DIR/your_out13 | wc -l) -eq 0 ]; then
+		echo $BGREEN"OK!"$WHITE;
+	else
+		echo $BRED"KO!"$WHITE;
+	fi
+	#/binn/ls
+	bash -c "/binn/ls" > $DIR/my_tmp 2>&1
+	tail -n +2 $DIR/my_tmp > $DIR/my_out13
+	head -n 1 $DIR/my_tmp > $DIR/word
+	awk '{$1 = ""; print > "test/word"}' $DIR/word
+	cat $DIR/word | sed 's/^[[:space:]]*//' >> $DIR/my_out13
+	rm -rf $DIR/my_tmp $DIR/word
+	echo "/binn/ls" | ./minishell > $DIR/your_out13 2>&1
+	sed '$ d' $DIR/your_out13 > tmp2
+	tail -n +2 tmp2 > $DIR/your_out13
+	rm -rf  tmp2
+	if [ $(diff $DIR/my_out13 $DIR/your_out13 | wc -l) -eq 0 ]; then
+		echo $BGREEN"OK!"$WHITE;
+	else
+		echo $BRED"KO!"$WHITE;
+	fi
+	#ls -l | noexiste
+	bash -c "ls -l | noexiste" > $DIR/my_tmp 2>&1
+	tail -n +2 $DIR/my_tmp > $DIR/my_out14
+	head -n 1 $DIR/my_tmp > $DIR/word
+	awk '{$1 = ""; print > "test/word"}' $DIR/word
+	cat $DIR/word | sed 's/^[[:space:]]*//' >> $DIR/my_out14
+	rm -rf $DIR/my_tmp $DIR/word
+	echo "ls -l | noexiste" | ./minishell > $DIR/your_out14 2>&1
+	sed '$ d' $DIR/your_out14 > tmp2
+	tail -n +2 tmp2 > $DIR/your_out14
+	rm -rf  tmp2
+	if [ $(diff $DIR/my_out14 $DIR/your_out14 | wc -l) -eq 0 ]; then
+		echo $BGREEN"OK!"$WHITE;
+	else
+		echo $BRED"KO!"$WHITE;
+	fi
+	#ls archivonoexiste
+	bash -c "ls archivonoexiste" > $DIR/my_out15 2>&1
+	echo "ls archivonoexiste" | ./minishell > $DIR/your_out15 2>&1
+	sed '$ d' $DIR/your_out15 > tmp2
+	tail -n +2 tmp2 > $DIR/your_out15
+	rm -rf  tmp2
+	if [ $(diff $DIR/my_out15 $DIR/your_out15 | wc -l) -eq 0 ]; then
+		echo $BGREEN"OK!"$WHITE;
+	else
+		echo $BRED"KO!"$WHITE;
+	fi
+	#ls archivonoexiste -la
+	bash -c "ls archivonoexiste -la" > $DIR/my_out16 2>&1
+	echo "ls archivonoexiste -la" | ./minishell > $DIR/your_out16 2>&1
+	sed '$ d' $DIR/your_out16 > tmp2
+	tail -n +2 tmp2 > $DIR/your_out16
+	rm -rf  tmp2
+	if [ $(diff $DIR/my_out16 $DIR/your_out16 | wc -l) -eq 0 ]; then
+		echo $BGREEN"OK!"$WHITE;
+	else
+		echo $BRED"KO!"$WHITE;
+	fi
 	#echo "$ARGV" | ./minishell > your_out
 }
 
