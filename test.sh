@@ -8,7 +8,9 @@ YELLOW="\033[00;33m"
 BYELLOW="\033[01;33m"
 BLUE="\033[00;34m"
 MAGENTA="\033[00;35m"
+BMAGENTA="\033[01;35m"
 CYAN="\033[00;36m"
+BCYAN="\033[00;36m"
 GREY="\033[00;37m"
 WHITE="\033[00;0m"
 #Variables
@@ -17,8 +19,8 @@ DIR=test
 DIR1=$DIR/cmd_env
 DIR2=$DIR/cmd_no_env
 #intro
-echo $YELLOW"---------------------------------------------------------"
-echo "|	${MAGENTA}Tester de la Minishell en honor a Pdel-pin${YELLOW}	|"
+echo $MAGENTA"---------------------------------------------------------"
+echo "|		   ${BYELLOW}TESTER MINISHELL${MAGENTA}			|"
 echo "---------------------------------------------------------"$WHITE
 
 #functions
@@ -491,7 +493,7 @@ linux_cmd_noenv()
 redir_linux()
 {
 	#> salida0
-	
+	echo "In construction";
 }
 
 tester_linux()
@@ -501,30 +503,40 @@ tester_linux()
 	redir_linux
 }
 
-if [ $(uname -s) = Linux ]; then
-	echo "ES LINUX";
-	if [ ! -d test ]; then
-		mkdir -p $DIR $DIR1 $DIR2;
-	fi
-	if [ $# -eq 0 ];then
+darwin_cmd()
+{
+	echo "holus";
+	# .././minishell
+}
+
+#do make
+if [ ! -f "../minishell" ]; then
+	cd .. && make && cd tester_minishell
+fi
+
+#Create directories
+if [ ! -d test ]; then
+	mkdir -p $DIR $DIR1 $DIR2;
+fi
+
+#Thanks
+if [ "$1" = "thanks" ] && [ $# -eq 1 ];then
+	echo $CYAN"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+	echo $BMAGENTA"		En honor a Pdel-pin ^_^"$CYAN;
+	echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"$WHITE;
+elif [ $# -eq 0 ];then
+	#Start the testing
+	if [ $(uname -s) = Linux ]; then
 		tester_linux
 		echo "RECOMENDACIONES: ";
 		echo "cat | cat | cat | cat | cat | cat | cat | cat | cat | cat | ls -l -a"
 		echo "cat | top | ls"
 		echo "cat | /bin/cat | cat | cat | cat | /bin/cat | cat | cat | cat | /bin/cat | ls -l -a"
 		echo "env -i ./minishell // env -i bash"
-	elif [ $# -eq 1 ];then
-		manual_linux
-	else
-		echo "Wrong arguments";
+	elif [ $(uname -s) = Darwin ]; then
+		darwin_cmd
 	fi
-elif [ $(uname -s) = Darwin ]; then
-	echo "ES MAC";
-	if [ $# -eq 0 ];then
-		echo "En construccion";
-	elif [ $# -eq 1 ];then
-		manual_mac
-	else
-		echo "Wrong arguments";
-	fi
+else
+	echo "Wrong arguments.";
+	echo "sh test.sh or sh test.sh thanks."
 fi
