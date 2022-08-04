@@ -960,12 +960,34 @@ darwin_builts()
 		echo $BRED"KO!"$WHITE;
 	fi
 	# echo $USER $HOME
-	bash -c "echo $USER $HOME" > $DIR3/my_out4 2>&1
-	echo "echo $USER $HOME" | .././minishell > $DIR3/your_out4 2>&1
+	bash -c "echo "$USER" "$HOME"" > $DIR3/my_out4 2>&1
+	echo "echo "$USER" "$HOME"" | .././minishell > $DIR3/your_out4 2>&1
 	sed '$ d' $DIR3/your_out4 > tmp2
 	tail -n +2 tmp2 > $DIR3/your_out4
 	rm -rf  tmp2
 	if [ $(diff $DIR3/my_out4 $DIR3/your_out4 | wc -l) -eq 0 ]; then
+		echo $BGREEN"OK!"$WHITE;
+	else
+		echo $BRED"KO!"$WHITE;
+	fi
+	# echo $USER $HOME
+	bash -c "echo "$USER" "$HOME"" > $DIR3/my_out4 2>&1
+	echo "echo "$USER" "$HOME"" | .././minishell > $DIR3/your_out4 2>&1
+	sed '$ d' $DIR3/your_out4 > tmp2
+	tail -n +2 tmp2 > $DIR3/your_out4
+	rm -rf  tmp2
+	if [ $(diff $DIR3/my_out4 $DIR3/your_out4 | wc -l) -eq 0 ]; then
+		echo $BGREEN"OK!"$WHITE;
+	else
+		echo $BRED"KO!"$WHITE;
+	fi
+	# echo '$USER' '$HOME'
+	bash -c "echo \'$PWD\' \'$HOME\'" > $DIR3/my_out5 2>&1
+	echo "echo \'$PWD\' \'$HOME\'" | .././minishell > $DIR3/your_out5 2>&1
+	sed '$ d' $DIR3/your_out5 > tmp2
+	tail -n +2 tmp2 > $DIR3/your_out5
+	rm -rf  tmp2
+	if [ $(diff $DIR3/my_out5 $DIR3/your_out5 | wc -l) -eq 0 ]; then
 		echo $BGREEN"OK!"$WHITE;
 	else
 		echo $BRED"KO!"$WHITE;
